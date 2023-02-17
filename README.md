@@ -1,12 +1,12 @@
 # Information
 
-### Warehouse Management System
+### Application for warehouse management 
 
 ---
 
 Creator - Gubaydullin Ildar<br/>
 Project: NoskiApp<br/>
-Description: An application for managing a socks warehouse.<br/>
+Description: Application for managing a socks warehouse.<br/>
 Programming language: Java 17<br/>
 Spring Framework 2.7.7<br/>
 
