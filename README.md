@@ -2,6 +2,7 @@
 
 ***
 ### Warehouse Management System
+***
 
 Creator - Gubaydullin Ildar<br/>
 Project: NoskiApp<br/>
