@@ -17,6 +17,16 @@ public class SocksController {
 
     private final SocksService socksService;
 
+    @GetMapping
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Запрос выполнен, результат в теле ответа в виде строкового представления целого числа."),
+            @ApiResponse(responseCode = "400", description = "Параметры запроса отсутствуют или имеют некорректный формат."),
+            @ApiResponse(responseCode = "500", description = "Произошла ошибка, не зависящая от вызывающей стороны.")
+    })
+    public ResponseEntity<Socks> getSocks() {
+
+    }
+
     @PostMapping
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Удалось добавить приход"),
@@ -34,16 +44,6 @@ public class SocksController {
             @ApiResponse(responseCode = "500", description = "Произошла ошибка, не зависящая от вызывающей стороны.")
     })
     public ResponseEntity<> put() {
-
-    }
-
-    @GetMapping
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Запрос выполнен, результат в теле ответа в виде строкового представления целого числа."),
-            @ApiResponse(responseCode = "400", description = "Параметры запроса отсутствуют или имеют некорректный формат."),
-            @ApiResponse(responseCode = "500", description = "Произошла ошибка, не зависящая от вызывающей стороны.")
-    })
-    public ResponseEntity<Socks> getSocks() {
 
     }
 
