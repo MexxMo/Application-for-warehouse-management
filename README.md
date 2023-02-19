@@ -14,4 +14,5 @@ Framework: Spring Boot 2.7.7<br/>
 Libraries:<br/>
 * SpringWeb<br/>
 * Lombok<br/>
-
+* Commons Lang<br/>
+* Swagger<br/>
