@@ -13,6 +13,7 @@ import javax.validation.constraints.Min;
 public class Socks {
     private Size size;
     private Color color;
+
     @Min(value = 1, message = "Процент содержания хлопка не может быть < 1")
     @Max(value = 100, message = "Процент содержания хлопка не может быть > 100")
     private int cottonPart;
