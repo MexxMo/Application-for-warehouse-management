@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import me.mexx.noskiapp.model.ArrivalSocks;
 import me.mexx.noskiapp.model.Color;
 import me.mexx.noskiapp.model.Size;
 import me.mexx.noskiapp.model.Socks;
@@ -30,8 +31,8 @@ public class SocksController {
             @ApiResponse(responseCode = "400", description = "Параметры запроса отсутствуют или имеют некорректный формат."),
             @ApiResponse(responseCode = "500", description = "Произошла ошибка, не зависящая от вызывающей стороны.")
     })
-    public ResponseEntity<String> acceptSocks(@Valid @RequestBody Socks socks) {
-        socksService.acceptSocks(socks);
+    public ResponseEntity<String> acceptSocks(@Valid @RequestBody ArrivalSocks arrivalSocks) {
+        socksService.acceptSocks(arrivalSocks);
         return ResponseEntity.ok("Носки добавлены на склад");
     }
 
@@ -42,8 +43,8 @@ public class SocksController {
             @ApiResponse(responseCode = "400", description = "Товара нет на складе в нужном количестве или параметры запроса имеют некорректный формат;"),
             @ApiResponse(responseCode = "500", description = "Произошла ошибка, не зависящая от вызывающей стороны.")
     })
-    public ResponseEntity<String> updateSocks(@RequestBody Socks socks) {
-        int socksCount = socksService.updateSocks(socks);
+    public ResponseEntity<String> updateSocks(@Valid @RequestBody ArrivalSocks arrivalSocks) {
+        int socksCount = socksService.updateSocks(arrivalSocks);
         return ResponseEntity.ok(socksCount + "Убыли со склада");
     }
 
@@ -80,8 +81,8 @@ public class SocksController {
             @ApiResponse(responseCode = "400", description = "Параметры запроса отсутствуют или имеют некорректный формат."),
             @ApiResponse(responseCode = "500", description = "Произошла ошибка, не зависящая от вызывающей стороны.")
     })
-    public ResponseEntity<String> deleteSocks(@RequestBody Socks socks) {
-        int socksCount = socksService.deleteSocks(socks);
+    public ResponseEntity<String> deleteSocks(@RequestBody ArrivalSocks arrivalSocks) {
+       int socksCount = socksService.updateSocks(arrivalSocks);
         return ResponseEntity.ok(socksCount + " уничтожены");
     }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import me.mexx.noskiapp.exception.ValidationException;
+import me.mexx.noskiapp.model.ArrivalSocks;
 import me.mexx.noskiapp.model.Color;
 import me.mexx.noskiapp.model.Size;
 import me.mexx.noskiapp.model.Socks;
@@ -20,28 +21,14 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SocksServiceImpl implements SocksService {
 
-//    private final ObjectMapper objectMapper;
-//    private final FilesServiceImpl filesService;
+    private final ObjectMapper objectMapper;
+    private final FilesServiceImpl filesService;
     private final ValidationService validationService;
 
     private Map<Socks, Integer> socksMap = new HashMap<>();
 
-    public int remove(Socks socks) {
-        if (socksMap.containsKey(socks)) {
-            int quantity = socksMap.get(socks);
-            if (quantity > socks.getQuantity()) {
-                socksMap.replace(socks, socksMap.get(socks) - socks.getQuantity());
-                return socks.getQuantity();
-            } else {
-                socksMap.remove(socks);
-                return quantity;
-            }
-        }
-        return 0;
-    }
-
-    public void CheckValid(Socks socks) {
-        if (!validationService.validate(socks)) {
+    public void CheckValid(ArrivalSocks arrivalSocks) {
+        if (!validationService.validate(arrivalSocks)) {
             throw new ValidationException();
         }
     }
@@ -53,13 +40,30 @@ public class SocksServiceImpl implements SocksService {
     }
 
     @Override
-    public void acceptSocks(Socks socks) {
-        CheckValid(socks);
+    public void acceptSocks(ArrivalSocks arrivalSocks) {
+        Socks socks = arrivalSocks.getSocks();
+        CheckValid(arrivalSocks);
         if (socksMap.containsKey(socks)) {
-            socksMap.replace(socks, socksMap.get(socks) + socks.getQuantity());
+            socksMap.replace(socks, socksMap.get(socks) + arrivalSocks.getQuantity());
+
         } else {
-            socksMap.put(socks, socks.getQuantity());
+            socksMap.put(socks, arrivalSocks.getQuantity());
         }
+    }
+
+    public int remove(ArrivalSocks arrivalSocks) {
+        Socks socks = arrivalSocks.getSocks();
+        if (socksMap.containsKey(socks)) {
+            int quantity = socksMap.get(socks);
+            if (quantity > arrivalSocks.getQuantity()) {
+                socksMap.replace(socks, socksMap.get(socks) - arrivalSocks.getQuantity());
+                return arrivalSocks.getQuantity();
+            } else {
+                socksMap.remove(socks);
+                return quantity;
+            }
+        }
+        return 0;
     }
 
     @Override
@@ -81,46 +85,46 @@ public class SocksServiceImpl implements SocksService {
     }
 
     @Override
-    public int updateSocks(Socks socks) {
-        CheckValid(socks);
-        return remove(socks);
+    public int updateSocks(ArrivalSocks arrivalSocks) {
+        CheckValid(arrivalSocks);
+        return remove(arrivalSocks);
     }
 
     @Override
-    public int deleteSocks(Socks socks) {
-        CheckValid(socks);
-        return remove(socks);
+    public int deleteSocks(ArrivalSocks arrivalSocks) {
+        CheckValid(arrivalSocks);
+        return remove(arrivalSocks);
     }
 
 
-//    private void saveToFile() {
-//        try {
-//            String json = objectMapper.writeValueAsString(socksMap);
-//            filesService.saveSocksToFile(json);
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    private void readFromFile() {
-//        String json = filesService.readSocksFromFile();
-//        try {
-//            if (!json.isBlank()) {
-//                socksMap = objectMapper.readValue(json, new TypeReference<>() {});
-//            }
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void saveToFile() {
+        try {
+            String json = objectMapper.writeValueAsString(socksMap);
+            filesService.saveSocksToFile(json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
 
-//    @PostConstruct
-//    private void init() {
-//        try {
-//            readFromFile();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void readFromFile() {
+        String json = filesService.readSocksFromFile();
+        try {
+            if (!json.isBlank()) {
+                socksMap = objectMapper.readValue(json, new TypeReference<>() {});
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @PostConstruct
+    private void init() {
+        try {
+            readFromFile();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
