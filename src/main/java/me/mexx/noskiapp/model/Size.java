@@ -9,7 +9,9 @@ public enum Size {
         this.size = size;
     }
 
-    public int getSize() {
-        return size;
+
+    @Override
+    public String toString() {
+        return "Размер " + size;
     }
 }
