@@ -45,7 +45,7 @@ public class SocksController {
     })
     public ResponseEntity<String> updateSocks(@Valid @RequestBody ArrivalSocks arrivalSocks) {
         int socksCount = socksService.updateSocks(arrivalSocks);
-        return ResponseEntity.ok(socksCount + "Убыли со склада");
+        return ResponseEntity.ok(socksCount + " Убыли со склада");
     }
 
     @GetMapping
@@ -82,7 +82,7 @@ public class SocksController {
             @ApiResponse(responseCode = "500", description = "Произошла ошибка, не зависящая от вызывающей стороны.")
     })
     public ResponseEntity<String> deleteSocks(@RequestBody ArrivalSocks arrivalSocks) {
-       int socksCount = socksService.updateSocks(arrivalSocks);
+       int socksCount = socksService.deleteSocks(arrivalSocks);
         return ResponseEntity.ok(socksCount + " уничтожены");
     }
 }
